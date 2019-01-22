@@ -1,7 +1,6 @@
 import requests
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy 
-from sqlalchemy import desc
 
 app = Flask(__name__)
 
@@ -11,6 +10,7 @@ db = SQLAlchemy(app)
 class City(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(50), nullable=False)
+	timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -24,7 +24,7 @@ def index():
 			db.session.commit()
 
 
-	cities = City.query.order_by(City.id.desc())
+	cities = City.query.all()
 
 	weather_data = []
 
@@ -41,17 +41,13 @@ def index():
 			'icon' : r['weather'][0]['icon'],
 		}
 
+		
 		weather_data.append(weather)
 
 
-	return render_template('weather.html', weather_data=weather_data)
+		
 
-@app.route('/', methods=['GET', 'POST'])
-def reset():
-	
-	db.session.delete(cities)
-	db.session.commit()
-	return redirect(url_for('weather'))
+	return render_template('weather.html', weather_data=weather_data)
 
 if __name__ == '__main__':
 	app.run(debug=True)

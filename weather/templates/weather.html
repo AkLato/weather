@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Jaké je počasí?</title>
+    <title>What's the weather like?</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
 </head>
 
 <body>
-    <section class="hero is-info">
+    <section class="hero is-primary">
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">
-                    Jaké je počasí?
+                    What's the weather like?
                 </h1>
             </div>
         </div>
@@ -26,11 +26,11 @@
                     <form method="POST">
                         <div class="field has-addons">
                             <div class="control is-expanded">
-                                <input class="input" name="city" type="text" placeholder="Název města">
+                                <input class="input" name="city" type="text" placeholder="City Name">
                             </div>
                             <div class="control">
                                 <button class="button is-info">
-                                    Přidat město
+                                    Add City
                                 </button>
                             </div>
                         </div>
@@ -69,7 +69,6 @@
         </div>
     </section>
     <footer class="footer">
-        <a class="button is-danger is-large level-item" href="{{ url_for('reset') }}">Reset app</a>
     </footer>
 </body>
 
