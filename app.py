@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy 
 from sqlalchemy import desc
 
@@ -43,15 +43,26 @@ def index():
 
 		weather_data.append(weather)
 
-
 	return render_template('weather.html', weather_data=weather_data)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/reset', methods=['GET', 'POST'])
 def reset():
-	
-	db.session.delete(cities)
+	if request.method == 'GET':
+		name = City.query.all()
+
+		if name:
+			City.__table__.drop()
+			db.session.create_all()
+			db.session.commit()
+		
+		
+	return redirect('/')
+'''
+	db.drop_all()
+	db.session.create_all()
 	db.session.commit()
 	return redirect(url_for('weather'))
+'''
 
 if __name__ == '__main__':
 	app.run(debug=True)
